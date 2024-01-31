@@ -11,8 +11,10 @@
   <ItemGroup>
     <Compile Remove="Class1.cs" />
     <Compile Remove="Interface1.cs" />
+    <Compile Remove="IRisk.cs" />
     <Compile Remove="PortfolioChartViewModel.cs" />
     <Compile Remove="RiskyCoin.cs" />
+    <Compile Remove="RiskyPosition.cs" />
   </ItemGroup>
 
   <ItemGroup>

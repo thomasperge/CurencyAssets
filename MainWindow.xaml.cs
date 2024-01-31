@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace CryptoCurrencie
 {
-	public partial class MainWindow : Window
+	public partial class MainWindow : Window, IObserver
 	{
 		public List<Coin> CryptoCurrencies { get; set; }
 		public Portfolio UserPortfolio { get; set; }
@@ -23,17 +23,26 @@ namespace CryptoCurrencie
 			UserPortfolio = new Portfolio();
 
 			// Set Position per default
-			PortfolioPosition newPosition = new PortfolioPosition("ethereum", 25, 25, 25);
+			PortfolioPosition newPosition = new PortfolioPosition("ethereum", 25, 35, 1);
 			ICommand calculateRiskCommand = new CalculateRiskCommand(newPosition);
 			calculateRiskCommand.Execute();
 			UserPortfolio.AddPosition(newPosition);
+
+			UserPortfolio.Subscribe(this);
 
 			SeriesCollection = new SeriesCollection
 			{
 				new ColumnSeries
 				{
 					Title = "Investments",
-					Values = new ChartValues<double>(UserPortfolio.Positions.Select(position => position.PurchasePrice))
+					Values = new ChartValues<double>(UserPortfolio.Positions.Select(position => position.PurchasePrice * position.Quantity)),
+					DataLabels = true
+				},
+				new ColumnSeries
+				{
+					Title = "Profits",
+					Values = new ChartValues<double>(UserPortfolio.Positions.Select(position => position.ProfitLoss * position.Quantity)),
+					DataLabels = true
 				}
 			};
 
@@ -135,6 +144,11 @@ namespace CryptoCurrencie
 			{
 				MessageBox.Show($"Une erreur s'est produite : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
+		}
+
+		public void Update()
+		{
+			SeriesCollection[0].Values = new ChartValues<double>(UserPortfolio.Positions.Select(position => position.PurchasePrice * position.Quantity));
 		}
 	}
 }

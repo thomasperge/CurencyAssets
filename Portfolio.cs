@@ -1,5 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -7,9 +9,11 @@ using System.Windows;
 
 namespace CryptoCurrencie
 {
-	public class Portfolio : INotifyPropertyChanged
+	public class Portfolio: INotifyPropertyChanged
 	{
 		private ObservableCollection<PortfolioPosition> positions;
+		private List<IObserver> observers;
+
 		public ObservableCollection<PortfolioPosition> Positions
 		{
 			get { return positions; }
@@ -18,43 +22,37 @@ namespace CryptoCurrencie
 				if (positions != value)
 				{
 					positions = value;
-					UpdateChartValues();
-					OnPropertyChanged(nameof(Positions));
-					OnPropertyChanged(nameof(CalculateTotalInvestment));
-					OnPropertyChanged(nameof(CalculateCurrentValue));
-					OnPropertyChanged(nameof(IsPortfolioRisky));
-					OnPropertyChanged(nameof(CaclulateTotalProfits));
-					OnPropertyChanged(nameof(CaclulateTotalAssets));
-					OnPropertyChanged(nameof(SeriesCollection));
+					NotifyObservers();
+					UpdateCalculatedProperties();
 				}
 			}
 		}
 
-		private SeriesCollection seriesCollection;
 		public SeriesCollection SeriesCollection
 		{
-			get { return seriesCollection; }
-			set
-			{
-				if (seriesCollection != value)
-				{
-					seriesCollection = value;
-					OnPropertyChanged(nameof(SeriesCollection));
-				}
-			}
+			get;
+			private set;
 		}
 
 		public Portfolio()
 		{
 			positions = new ObservableCollection<PortfolioPosition>();
 			positions.CollectionChanged += (sender, e) => UpdateChartValues();
+			observers = new List<IObserver>();
 
-			seriesCollection = new SeriesCollection
+			SeriesCollection = new SeriesCollection
 			{
 				new ColumnSeries
 				{
 					Title = "Investments",
-					Values = new ChartValues<double>(positions.Select(position => position.PurchasePrice))
+					Values = new ChartValues<double>(Positions.Select(position => position.PurchasePrice * position.Quantity)),
+					DataLabels = true
+				},
+				new ColumnSeries
+				{
+					Title = "Profits",
+					Values = new ChartValues<double>(Positions.Select(position => position.ProfitLoss * position.Quantity)),
+					DataLabels = true
 				}
 			};
 		}
@@ -62,13 +60,30 @@ namespace CryptoCurrencie
 		public void AddPosition(PortfolioPosition position)
 		{
 			positions.Add(position);
-			OnPropertyChanged(nameof(Positions));
-			OnPropertyChanged(nameof(CalculateTotalInvestment));
-			OnPropertyChanged(nameof(CalculateCurrentValue));
-			OnPropertyChanged(nameof(IsPortfolioRisky));
-			OnPropertyChanged(nameof(CaclulateTotalProfits));
-			OnPropertyChanged(nameof(CaclulateTotalAssets));
-			OnPropertyChanged(nameof(SeriesCollection));
+			NotifyObservers();
+			UpdateCalculatedProperties();
+		}
+
+		public void Subscribe(IObserver observer)
+		{
+			observers.Add(observer);
+		}
+
+		public void Unsubscribe(IObserver observer)
+		{
+			observers.Remove(observer);
+		}
+
+		private void NotifyObservers()
+		{
+			foreach (var observer in observers)
+			{
+				observer.Update();
+			}
+
+			// Mettez à jour la SeriesCollection
+			SeriesCollection[0].Values = new ChartValues<double>(Positions.Select(position => position.PurchasePrice * position.Quantity));
+			SeriesCollection[1].Values = new ChartValues<double>(Positions.Select(position => position.ProfitLoss * position.Quantity));
 		}
 
 		private void UpdateChartValues()
@@ -77,6 +92,7 @@ namespace CryptoCurrencie
 			{
 				// Mettez à jour la SeriesCollection
 				SeriesCollection[0].Values = new ChartValues<double>(Positions.Select(position => position.PurchasePrice * position.Quantity));
+				SeriesCollection[1].Values = new ChartValues<double>(Positions.Select(position => position.ProfitLoss * position.Quantity));
 			});
 		}
 
@@ -90,12 +106,12 @@ namespace CryptoCurrencie
 			get { return positions.Sum(position => position.CurrentPrice); }
 		}
 
-		public double CaclulateTotalAssets
+		public double CalculateTotalAssets
 		{
 			get { return positions.Sum(position => position.Quantity); }
 		}
 
-		public double CaclulateTotalProfits
+		public double CalculateTotalProfits
 		{
 			get { return positions.Sum(position => position.ProfitLoss); }
 		}
@@ -103,6 +119,15 @@ namespace CryptoCurrencie
 		public bool IsPortfolioRisky
 		{
 			get { return CalculateCurrentValue < CalculateTotalInvestment; }
+		}
+
+		private void UpdateCalculatedProperties()
+		{
+			OnPropertyChanged(nameof(CalculateTotalInvestment));
+			OnPropertyChanged(nameof(CalculateCurrentValue));
+			OnPropertyChanged(nameof(CalculateTotalAssets));
+			OnPropertyChanged(nameof(CalculateTotalProfits));
+			OnPropertyChanged(nameof(IsPortfolioRisky));
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

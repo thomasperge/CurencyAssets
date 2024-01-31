@@ -23,3 +23,4 @@ C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\obj\Debug\ne
 C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\obj\Debug\net8.0-windows\CryptoCurrencie.csproj.CopyComplete
 C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Debug\net8.0-windows\LiveCharts.dll
 C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Debug\net8.0-windows\LiveCharts.Wpf.dll
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\obj\Debug\net8.0-windows\CryptoCurrencie.sourcelink.json

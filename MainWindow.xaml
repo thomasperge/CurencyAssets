@@ -152,13 +152,13 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontWeight="Bold" Text="Total Assets : "/>
-                                <TextBlock Text="{Binding UserPortfolio.CaclulateTotalAssets}"/>
+                                <TextBlock Text="{Binding UserPortfolio.CalculateTotalAssets}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontWeight="Bold" Text="Total Profits : "/>
                                 <TextBlock Text="$"/>
-                                <TextBlock Text="{Binding UserPortfolio.CaclulateTotalProfits}"/>
+                                <TextBlock Text="{Binding UserPortfolio.CalculateTotalProfits}"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
@@ -200,7 +200,11 @@
                 </TabItem>
 
                 <TabItem Header="Graphiques">
-                    <lvc:CartesianChart Series="{Binding SeriesCollection}" />
+                    <lvc:CartesianChart Series="{Binding SeriesCollection}">
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Y Axis" MinValue="0" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
                 </TabItem>
             </TabControl>
         </Border>
