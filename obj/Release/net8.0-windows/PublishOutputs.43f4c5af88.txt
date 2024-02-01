@@ -1,0 +1,8 @@
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\CryptoCurrencie.exe
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\CryptoCurrencie.dll
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\CryptoCurrencie.deps.json
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\CryptoCurrencie.runtimeconfig.json
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\CryptoCurrencie.pdb
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\LiveCharts.Wpf.dll
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\LiveCharts.dll
+C:\Users\Kauffmant\Documents\Coding\CryptoCurrencie\CryptoCurrencie\bin\Release\net8.0-windows\app.publish\Newtonsoft.Json.dll

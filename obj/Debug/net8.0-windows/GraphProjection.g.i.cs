@@ -62,7 +62,7 @@ namespace CryptoCurrencie {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CryptoCurrencie;component/graphprojection.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CryptoCurrencie;V1.0.0.0;component/graphprojection.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\GraphProjection.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
