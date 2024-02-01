@@ -206,6 +206,34 @@
                         </lvc:CartesianChart.AxisY>
                     </lvc:CartesianChart>
                 </TabItem>
+
+                <TabItem Header="Projections">
+                    <Grid Margin="6,0,6,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Select Time Period:" Grid.Row="0"/>
+                        <ComboBox x:Name="cmbTimePeriod" Grid.Row="1" SelectedIndex="0">
+                            <ComboBoxItem Content="Months"/>
+                            <ComboBoxItem Content="Years"/>
+                        </ComboBox>
+
+                        <Label Content="Enter Number of Periods:" Grid.Row="2"/>
+                        <TextBox x:Name="txtNumberOfPeriods" Grid.Row="3" />
+
+                        <Label Content="Enter Profit Percentage:" Grid.Row="4"/>
+                        <TextBox x:Name="txtProfitPercentage" Grid.Row="5" Margin="0,0,0,10" />
+
+                        <Button Content="Generate Projection Graph" Grid.Row="7" Click="GenerateGraph_Click"/>
+                    </Grid>
+                </TabItem>
             </TabControl>
         </Border>
     </Grid>

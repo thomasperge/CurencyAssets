@@ -9,12 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AnnualReturnStrategy.cs" />
     <Compile Remove="Class1.cs" />
     <Compile Remove="Interface1.cs" />
+    <Compile Remove="IReturnCalculationStrategy.cs" />
     <Compile Remove="IRisk.cs" />
+    <Compile Remove="MonthlyReturnStrategy.cs" />
     <Compile Remove="PortfolioChartViewModel.cs" />
     <Compile Remove="RiskyCoin.cs" />
     <Compile Remove="RiskyPosition.cs" />
+    <Compile Remove="Window1.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Window1.xaml" />
   </ItemGroup>
 
   <ItemGroup>

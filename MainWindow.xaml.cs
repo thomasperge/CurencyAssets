@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
+using static CryptoCurrencie.Portfolio;
 
 namespace CryptoCurrencie
 {
@@ -143,6 +145,25 @@ namespace CryptoCurrencie
 			catch (Exception ex)
 			{
 				MessageBox.Show($"Une erreur s'est produite : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+		private void GenerateGraph_Click(object sender, RoutedEventArgs e)
+		{
+			if (int.TryParse(txtNumberOfPeriods.Text, out int numberOfPeriods) && double.TryParse(txtProfitPercentage.Text, out double profitPercentage))
+			{
+				var selectedTimePeriod = (cmbTimePeriod.SelectedItem as ComboBoxItem)?.Content.ToString();
+				System.Diagnostics.Debug.WriteLine("======> Main SelectedTimePeriod: " + selectedTimePeriod);
+
+				GraphProjection projectionWindow = new GraphProjection(numberOfPeriods, profitPercentage, selectedTimePeriod, this);
+				projectionWindow.CalculateAndSetNewGraph(UserPortfolio);
+				
+				projectionWindow.ParentMainWindow = this;
+				projectionWindow.Show();
+			}
+			else
+			{
+				MessageBox.Show("Invalid input. Please enter valid numbers.");
 			}
 		}
 

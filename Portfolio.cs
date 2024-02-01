@@ -74,7 +74,7 @@ namespace CryptoCurrencie
 			observers.Remove(observer);
 		}
 
-		private void NotifyObservers()
+		public void NotifyObservers()
 		{
 			foreach (var observer in observers)
 			{
