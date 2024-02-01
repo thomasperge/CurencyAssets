@@ -1,10 +1,7 @@
 ﻿using LiveCharts;
 using LiveCharts.Wpf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 
 namespace CryptoCurrencie
@@ -12,7 +9,7 @@ namespace CryptoCurrencie
 	public class Portfolio: INotifyPropertyChanged
 	{
 		private ObservableCollection<PortfolioPosition> positions;
-		private List<IObserver> observers;
+		private readonly List<IObserver> observers;
 
 		public ObservableCollection<PortfolioPosition> Positions
 		{
@@ -81,7 +78,6 @@ namespace CryptoCurrencie
 				observer.Update();
 			}
 
-			// Mettez à jour la SeriesCollection
 			SeriesCollection[0].Values = new ChartValues<double>(Positions.Select(position => position.PurchasePrice * position.Quantity));
 			SeriesCollection[1].Values = new ChartValues<double>(Positions.Select(position => position.ProfitLoss * position.Quantity));
 		}
@@ -90,7 +86,6 @@ namespace CryptoCurrencie
 		{
 			Application.Current.Dispatcher.Invoke(() =>
 			{
-				// Mettez à jour la SeriesCollection
 				SeriesCollection[0].Values = new ChartValues<double>(Positions.Select(position => position.PurchasePrice * position.Quantity));
 				SeriesCollection[1].Values = new ChartValues<double>(Positions.Select(position => position.ProfitLoss * position.Quantity));
 			});

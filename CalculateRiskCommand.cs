@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryptoCurrencie
+﻿namespace CryptoCurrencie
 {
 	public class CalculateRiskCommand : ICommand
 	{
@@ -15,6 +9,7 @@ namespace CryptoCurrencie
 			_position = position;
 		}
 
+		// Calculer le risque
 		public void Execute()
 		{
 			double priceDifferencePercentage = (_position.CurrentPrice - _position.PurchasePrice) / _position.PurchasePrice * 100;

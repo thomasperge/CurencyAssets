@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using static CryptoCurrencie.Portfolio;
 
 namespace CryptoCurrencie
 {
@@ -24,12 +23,14 @@ namespace CryptoCurrencie
 			CryptoCurrencies = new List<Coin>();
 			UserPortfolio = new Portfolio();
 
-			// Set Position per default
-			PortfolioPosition newPosition = new PortfolioPosition("ethereum", 25, 35, 1);
+			// Ajouter une position par default
+			PortfolioPosition newPosition = new PortfolioPosition("Voiture Audi", 750, 1750, 1);
 			ICommand calculateRiskCommand = new CalculateRiskCommand(newPosition);
-			calculateRiskCommand.Execute();
-			UserPortfolio.AddPosition(newPosition);
 
+			// Calculer le risque de la position via un Command
+			calculateRiskCommand.Execute();
+
+			UserPortfolio.AddPosition(newPosition);
 			UserPortfolio.Subscribe(this);
 
 			SeriesCollection = new SeriesCollection
@@ -70,6 +71,7 @@ namespace CryptoCurrencie
 				}
 			}
 		}
+
 		private async Task<Coin> FetchApiAsync(string apiUrl)
 		{
 			using (HttpClient client = new HttpClient())
@@ -85,6 +87,7 @@ namespace CryptoCurrencie
 					{
 						JsonElement root = document.RootElement;
 
+						// Recupere les données de base
 						string id = root.GetProperty("id").GetString();
 						string symbol = root.GetProperty("symbol").GetString();
 						string name = root.GetProperty("name").GetString();
@@ -103,6 +106,7 @@ namespace CryptoCurrencie
 						double change_percent_last_day = marketDataElemnt.GetProperty("price_change_percentage_24h").GetDouble();
 						double change_percent_last_week = marketDataElemnt.GetProperty("price_change_percentage_7d").GetDouble();
 
+						// Instancier Coin
 						return new Coin(id, symbol, name, Math.Floor(usd_price), Math.Floor(change_price_last_day), Math.Floor(change_percent_last_day), Math.Floor(change_percent_last_week), thumbImage, smallImage, largeImage);
 					}
 				}
@@ -130,7 +134,7 @@ namespace CryptoCurrencie
 
 				UserPortfolio.AddPosition(newPosition);
 
-				// Réinitialiser les champs après l'ajout
+				// Reset les champs
 				txtCoinName.Text = "";
 				txtPurchasePrice.Text = "";
 				txtCurrentPrice.Text = "";
@@ -153,6 +157,8 @@ namespace CryptoCurrencie
 			if (int.TryParse(txtNumberOfPeriods.Text, out int numberOfPeriods) && double.TryParse(txtProfitPercentage.Text, out double profitPercentage))
 			{
 				var selectedTimePeriod = (cmbTimePeriod.SelectedItem as ComboBoxItem)?.Content.ToString();
+				System.Diagnostics.Debug.WriteLine("======> Main NumberOfPeriods: " + numberOfPeriods);
+				System.Diagnostics.Debug.WriteLine("======> Main ProfitPercentage: " + profitPercentage);
 				System.Diagnostics.Debug.WriteLine("======> Main SelectedTimePeriod: " + selectedTimePeriod);
 
 				GraphProjection projectionWindow = new GraphProjection(numberOfPeriods, profitPercentage, selectedTimePeriod, this);

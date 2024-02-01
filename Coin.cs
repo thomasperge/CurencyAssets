@@ -26,7 +26,5 @@
 			SmallImage = smallImage;
 			LargeImage = largeImage;
 		}
-
-		public Coin() { }
 	}
 }

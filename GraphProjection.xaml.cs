@@ -48,20 +48,23 @@ namespace CryptoCurrencie
 				}
 			};
 
-			if (SelectedTimePeriod == "Months")
+			if (SelectedTimePeriod == "Years")
 			{
-				for (int i = 0; i < NumberOfPeriods; i++)
+				for (int i = 1; i <= NumberOfPeriods; i++)
 				{
 					double totalInvestment = userPortfolio.CalculateTotalInvestment;
 
 					// Calcul Profit
 					double totalProfits;
+
 					ChartValues<double> values = (ChartValues<double>)SeriesCollectionProjection[1].Values;
 					int lastIndex = values.Count - 1;
+
 					if (lastIndex >= 0)
 					{
-						totalProfits = (double)values[lastIndex] * ((ProfitPercentage / 100) + 1);
-					} else
+						totalProfits = values[lastIndex] * Math.Pow(1 + (ProfitPercentage / 100), i);
+					}
+					else
 					{
 						totalProfits = userPortfolio.CalculateTotalProfits;
 					}
@@ -71,19 +74,21 @@ namespace CryptoCurrencie
 					SeriesCollectionProjection[1].Values.Add(totalProfits);
 				}
 			}
-			else if (SelectedTimePeriod == "Years")
+			else if (SelectedTimePeriod == "Months")
 			{
-				for (int i = 0; i < NumberOfPeriods; i++)
+				for (int i = 1; i <= NumberOfPeriods; i++)
 				{
 					double totalInvestment = userPortfolio.CalculateTotalInvestment;
 
 					// Calcul Profit
 					double totalProfits;
+
 					ChartValues<double> values = (ChartValues<double>)SeriesCollectionProjection[1].Values;
 					int lastIndex = values.Count - 1;
+
 					if (lastIndex >= 0)
 					{
-						totalProfits = (double)values[lastIndex] * ((ProfitPercentage / 100) + 1);
+						totalProfits = (double)values[lastIndex] * Math.Pow(1 + ((ProfitPercentage / 100) / 12), i);
 					}
 					else
 					{
