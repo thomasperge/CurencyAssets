@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CryptoCurrencie")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87ca2f6ec0d2951923de4b70fc6708f3f25814f7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48bd1fd300edb48100cae2ad535a86592f70a35c")]
 [assembly: System.Reflection.AssemblyProductAttribute("CryptoCurrencie")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CryptoCurrencie")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
